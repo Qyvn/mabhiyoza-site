@@ -108,3 +108,6 @@ All three are configured in `src/config/features.ts`.
 - **Events:** real name, venue, city, date and time, tiers with ZAR prices, capacity notes, max tickets per order. Remove the EXAMPLE event.
 - **Vault:** the real title, teaser artwork, release date and time, and an optional pre-save or streaming link. Optionally a signup form endpoint.
 - **Mixtape:** nothing required. Optionally change the tape colours or the max song count.
+
+## MaBhiyoza redesign (Side A / Side B)
+Different from the CD-wheel template: a record-sleeve intro (no photos), a sticky needle-progress bar plus a Side A / Side B flip, a record crate you flip through, and a turntable. Drag the tonearm onto the record to play the 30s preview (buttons do the same), and drag the record in a circle to scratch/scrub. Every record label is generative beadwork-pattern art seeded by the song title (`src/lib/beadwork.ts`). It is design art, not official cover art. "Build your crate" (mixtape), the vault and Live (tickets) live on Side B / A2.

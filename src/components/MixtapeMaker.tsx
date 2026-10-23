@@ -1,3 +1,4 @@
+import { BeadLabel } from './BeadLabel';
 import { useMemo, useState, type DragEvent } from 'react';
 import type { MixtapeConfig, Song } from '../types';
 import { MAX_NAME, moveItem, shareUrl } from '../lib/mixtape';
@@ -25,13 +26,13 @@ export function MixtapeMaker({ songs, config }: { songs: Song[]; config: Mixtape
   };
   const canShare = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
   const share = async () => {
-    try { await navigator.share({ title: name || 'My mixtape', text: 'I made you a mixtape', url }); } catch { /* cancelled */ }
+    try { await navigator.share({ title: name || 'My mixtape', text: 'I built you a crate', url }); } catch { /* cancelled */ }
   };
 
   return (
     <div className="mixtape-maker" data-testid="mixtape-maker">
       <div className="mix-catalogue">
-        <h3 className="small-caps">Catalogue</h3>
+        <h3 className="small-caps">Records</h3>
         <ul>
           {songs.map((s) => {
             const on = ids.includes(s.id);
@@ -40,7 +41,7 @@ export function MixtapeMaker({ songs, config }: { songs: Song[]; config: Mixtape
                 <img src={s.artwork} alt="" width={40} height={40} />
                 <span className="mix-title">{s.title}</span>
                 <button type="button" className="btn btn-ghost btn-sm" onClick={() => (on ? remove(s.id) : add(s.id))}
-                  disabled={!on && full} aria-label={on ? `Remove ${s.title} from mixtape` : `Add ${s.title} to mixtape`}>
+                  disabled={!on && full} aria-label={on ? `Remove ${s.title} from crate` : `Add ${s.title} to crate`}>
                   {on ? 'Remove' : 'Add'}
                 </button>
               </li>
@@ -54,15 +55,15 @@ export function MixtapeMaker({ songs, config }: { songs: Song[]; config: Mixtape
           onDragOver={(e) => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={onDrop}
           data-testid="blank-tape">
           <div className="blank-tape-label">
-            <span className="blank-tape-name">{name.trim() || 'Untitled mixtape'}</span>
+            <span className="blank-tape-name">{name.trim() || 'Untitled crate'}</span>
             <span className="small">{ids.length}/{config.maxSongs} tracks</span>
           </div>
-          <div className="cassette-window"><span className="reel" /><span className="tape" /><span className="reel" /></div>
+          <div className="crate-record"><BeadLabel title={name.trim() || 'Untitled crate'} /></div>
         </div>
         {ids.length === 0 ? (
-          <p className="muted small">Tap “Add” or drag songs onto the tape.</p>
+          <p className="muted small">Tap “Add” or drag songs onto the sleeve.</p>
         ) : (
-          <ol className="mix-tracks" aria-label="Mixtape tracklist">
+          <ol className="mix-tracks" aria-label="Crate tracklist">
             {ids.map((id, i) => {
               const t = byId.get(id)?.title;
               return (
@@ -79,10 +80,10 @@ export function MixtapeMaker({ songs, config }: { songs: Song[]; config: Mixtape
             })}
           </ol>
         )}
-        {full && <p className="small muted" role="status">Tape full ({config.maxSongs} songs max).</p>}
+        {full && <p className="small muted" role="status">Crate full ({config.maxSongs} songs max).</p>}
 
         <label className="field">
-          <span>Name your tape</span>
+          <span>Name your crate</span>
           <input value={name} maxLength={MAX_NAME} onChange={(e) => setName(e.target.value)} placeholder="e.g. Late-night drive" />
         </label>
         <fieldset className="field swatches">

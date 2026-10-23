@@ -105,5 +105,13 @@ export function usePreviewPlayer(song: Song | null, capSeconds: number) {
     await play();
   }, [song, play]);
 
-  return { status, time, duration, cap, play, pause, replay, audio: audioRef };
+  const seek = useCallback((t: number) => {
+    const a = audioRef.current;
+    if (!a || !song?.previewUrl) return;
+    const v = Math.min(cap, Math.max(0, t));
+    try { a.currentTime = v; } catch { /* ignore */ }
+    setTime(v);
+  }, [song, cap]);
+
+  return { status, time, duration, cap, play, pause, replay, seek, audio: audioRef };
 }

@@ -47,11 +47,11 @@ describe('mixtape URL encode/decode', () => {
 describe('mixtape maker UI', () => {
   it('adds up to max, reorders, and builds a share link', async () => {
     render(<MixtapeMaker songs={songs} config={mixCfg} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Add Alpha to mixtape' }));
-    await userEvent.click(screen.getByRole('button', { name: 'Add Charlie to mixtape' }));
-    expect(screen.getByRole('button', { name: 'Add Bravo to mixtape' })).toBeDisabled();
+    await userEvent.click(screen.getByRole('button', { name: 'Add Alpha to crate' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Add Charlie to crate' }));
+    expect(screen.getByRole('button', { name: 'Add Bravo to crate' })).toBeDisabled();
     await userEvent.click(screen.getByRole('button', { name: 'Move Charlie up' }));
-    await userEvent.type(screen.getByLabelText('Name your tape'), 'For you');
+    await userEvent.type(screen.getByLabelText('Name your crate'), 'For you');
     await userEvent.click(screen.getByLabelText('Blue'));
     const href = screen.getByTestId('mixtape-link').getAttribute('href')!;
     expect(decodeMixtape(new URL(href).search, songs, opts)).toEqual({ name: 'For you', color: 'blue', songIds: ['c', 'a'] });
